@@ -1,7 +1,10 @@
-import { createStore, applyMiddleware } from 'redux';
-import {thunk} from 'redux-thunk';
-import rootReducer from './reducers';
+import { configureStore } from '@reduxjs/toolkit';
+import wishlistReducer from './wishlistSlice';
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
+const store = configureStore({
+  reducer: {
+    wishlist: wishlistReducer,
+  },
+});
 
 export default store;
