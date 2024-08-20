@@ -207,6 +207,7 @@ import { fetchProducts, addProduct, updateProduct, deleteProduct } from '../Redu
 import ProductForm from '../components/ProductForm';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import NavbarComponent from '../components/Navbar';
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
@@ -225,25 +226,25 @@ const AdminDashboard = () => {
   };
 
   const handleDelete = (id) => {
-    dispatch(deleteProduct(id)).then(() => {
-      toast.success('Product deleted successfully!');
-    });
-  };
+    if (window.confirm("Are you sure you want to delete this product?")){
+      dispatch(deleteProduct(id));
+    }
+    
+    };
 
   const handleAddProduct = (newProduct) => {
-    dispatch(addProduct(newProduct)).then(() => {
-      toast.success('Product added successfully!');
-    });
+    dispatch(addProduct(newProduct));
+    toast.success('Product added successfully!');
   };
 
   const handleUpdateProduct = (updatedProduct) => {
-    dispatch(updateProduct(updatedProduct)).then(() => {
-      toast.success('Product updated successfully!');
-    });
+    dispatch(updateProduct(updatedProduct));
+    toast.success('Product updated successfully!');
   };
 
   return (
     <div className="container mt-5">
+            <NavbarComponent />
       <ToastContainer />
       <h2>Admin Dashboard</h2>
       <button className="btn btn-primary mb-3" onClick={() => setSelectedProduct({})}>

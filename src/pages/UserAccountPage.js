@@ -24,10 +24,12 @@ const UserAccountPage = () => {
   return (
     <>
       <NavbarComponent />
-      <div className="container my-4">
+      <div className="container my-4 py-5">
         <h2>User Account</h2>
         {user ? (
           <div>
+            {console.log(user)
+            }
             <p>Email: {user.email}</p>
             <p>Role: {user.role}</p>
             <button onClick={handleLogout} className="btn btn-danger">Logout</button>

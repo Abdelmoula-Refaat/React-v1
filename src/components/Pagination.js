@@ -9,7 +9,7 @@ const Pagination = ({ itemsPerPage, totalItems, paginate, currentPage }) => {
 
   return (
     <nav>
-      <ul className="pagination">
+      <ul className="pagination d-flex justify-content-center">
         {pageNumbers.map(number => (
           <li key={number} className={`page-item ${currentPage === number ? 'active' : ''}`}>
             <button onClick={() => paginate(number)} className="page-link">

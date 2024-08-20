@@ -1,72 +1,45 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createSlice } from '@reduxjs/toolkit';
+import { nanoid } from 'nanoid'; // Import a library for generating unique IDs
 
-export const fetchProducts = createAsyncThunk(
-  'products/fetchProducts',
-  async () => {
-    const response = await axios.get('https://fakestoreapi.com/products');
-    return response.data;
-  }
-);
+const initialState = {
+  items: JSON.parse(localStorage.getItem('products')) || [],
+  status: 'idle',
+};
 
-export const addProduct = createAsyncThunk(
-  'products/addProduct',
-  async (newProduct) => {
-    const response = await axios.post('https://fakestoreapi.com/products', newProduct);
-    return response.data;
-  }
-);
-
-export const updateProduct = createAsyncThunk(
-  'products/updateProduct',
-  async (updatedProduct) => {
-    const response = await axios.put(`https://fakestoreapi.com/products/${updatedProduct.id}`, updatedProduct);
-    return response.data;
-  }
-);
-
-export const deleteProduct = createAsyncThunk(
-  'products/deleteProduct',
-  async (id) => {
-    await axios.delete(`https://fakestoreapi.com/products/${id}`);
-    return id;
-  }
-);
-
-const productsSlice = createSlice({
+const productSlice = createSlice({
   name: 'products',
-  initialState: {
-    items: [],
-    status: 'idle',
-    error: null,
-  },
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchProducts.pending, (state) => {
-        state.status = 'loading';
-      })
-      .addCase(fetchProducts.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.items = action.payload;
-      })
-      .addCase(fetchProducts.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message;
-      })
-      .addCase(addProduct.fulfilled, (state, action) => {
-        state.items.push(action.payload);
-      })
-      .addCase(updateProduct.fulfilled, (state, action) => {
-        const index = state.items.findIndex(product => product.id === action.payload.id);
-        if (index !== -1) {
-          state.items[index] = action.payload;
-        }
-      })
-      .addCase(deleteProduct.fulfilled, (state, action) => {
-        state.items = state.items.filter(product => product.id !== action.payload);
-      });
+  initialState,
+  reducers: {
+    fetchProducts: (state) => {
+      state.status = 'succeeded';
+    },
+    addProduct: (state, action) => {
+      // Generate a unique ID for the new product
+      const newProduct = {
+        ...action.payload,
+        id: nanoid(), // Add a new unique ID to the product
+      };
+    
+      // Add the new product with the unique ID to the state
+      state.items.push(newProduct);
+    
+      // Update localStorage with the new state
+      localStorage.setItem('products', JSON.stringify(state.items));
+    },
+    updateProduct: (state, action) => {
+      const index = state.items.findIndex(product => product.id === action.payload.id);
+      if (index !== -1) {
+        state.items[index] = action.payload;
+        localStorage.setItem('products', JSON.stringify(state.items));
+      }
+    },
+    deleteProduct: (state, action) => {
+      state.items = state.items.filter(product => product.id !== action.payload);
+      localStorage.setItem('products', JSON.stringify(state.items));
+    },
   },
 });
 
-export default productsSlice.reducer;
+export const { fetchProducts, addProduct, updateProduct, deleteProduct } = productSlice.actions;
+
+export default productSlice.reducer;

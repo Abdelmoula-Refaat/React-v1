@@ -73,7 +73,7 @@ const CartPage = () => {
             {cart.map(item => (
               <tr key={item.id}>
                 <td>{item.title}</td>
-                <td>${item.price.toFixed(2)}</td>
+                <td>${item.price}</td>
                 <td>
                   <input
                     type="number"
@@ -84,7 +84,7 @@ const CartPage = () => {
                     min="1"
                   />
                 </td>
-                <td>${(item.price * item.quantity).toFixed(2)}</td>
+                <td>${(item.price * item.quantity)}</td>
                 <td>
                   <button className="btn btn-danger" onClick={() => handleRemove(item.id)}>Remove</button>
                 </td>
@@ -94,9 +94,9 @@ const CartPage = () => {
         </table>
       )}
       <div className="mt-4">
-        <h4>Subtotal: ${total.toFixed(2)}</h4>
-        <h4>Tax (15%): ${tax.toFixed(2)}</h4>
-        <h4>Total: ${(total + tax).toFixed(2)}</h4>
+        <h4>Subtotal: ${total}</h4>
+        <h4>Tax (15%): ${tax}</h4>
+        <h4>Total: ${(total + tax)}</h4>
       </div>
       <ToastContainer /> {/* Add ToastContainer here */}
     </div>

@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import NavbarComponent from '../components/Navbar';
 import Footer from '../components/Footer';
-import axios from 'axios';
-import { useCart } from '../Context/CartProvider'; // تأكد من صحة المسار
+import { useCart } from '../Context/CartProvider';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToWishlist } from '../Redux/wishlistSlice'; // تأكد من صحة المسار
+import { addToWishlist } from '../Redux/wishlistSlice';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import styles from "./ProductDetailPage.module.css";
 
 const ProductDetailPage = () => {
   const { id } = useParams();
@@ -15,15 +15,28 @@ const ProductDetailPage = () => {
   const { addToCart } = useCart();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const wishlist = useSelector((state) => state.wishlist); // الحصول على القائمة الحالية من الwishlist
+  const wishlist = useSelector((state) => state.wishlist);
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const response = await axios.get(`https://fakestoreapi.com/products/${id}`);
-        setProduct(response.data);
-      } catch (error) {
-        console.error('Error fetching product details', error);
+    const fetchProduct = () => {
+      // Get the products from localStorage
+      const products = JSON.parse(localStorage.getItem('products')) || [];
+      console.log('Products in localStorage:', products); // Log products to check
+
+      // Log the ID from useParams
+      console.log('Requested Product ID:', id);
+
+      // Ensure ID is a string for comparison
+      const productId = id.toString();
+
+      // Find the product with the matching ID
+      const foundProduct = products.find((prod) => prod.id === productId);
+      console.log('Product found:', foundProduct); // Log the found product
+
+      if (foundProduct) {
+        setProduct(foundProduct);
+      } else {
+        console.error('Product not found with ID:', productId);
       }
     };
 
@@ -54,7 +67,6 @@ const ProductDetailPage = () => {
           toast.success(`${product.title} added to wishlist!`);
         }
       } else {
-        // إذا كانت wishlist فارغة
         dispatch(addToWishlist(product));
         toast.success(`${product.title} added to wishlist!`);
       }
@@ -68,17 +80,23 @@ const ProductDetailPage = () => {
   return (
     <>
       <NavbarComponent />
-      <div className="container my-4">
-        <h2>{product.title}</h2>
-        <div className="row">
-          <div className="col-md-6">
-            <img src={product.image} className="img-fluid" alt={product.title} />
+      <div className="container">
+        <div className={`row ${styles.productDetailsPage}`}>
+          <div className="col-12 col-lg-5">
+            <div className={styles.imageContainer}>
+              <img src={product.image} alt={product.title} className={styles.mainImage} />
+            </div>
           </div>
-          <div className="col-md-6">
-            <h3>${product.price}</h3>
-            <p>{product.description}</p>
-            <button onClick={handleAddToCart} className="btn btn-primary">Add to Cart</button>
-            <button onClick={handleAddToWishlist} className="btn btn-secondary ml-2">Add to Wishlist</button>
+          <div className="col-12 col-lg-7">
+            <div className={styles.productInfo}>
+              <h1 className={styles.productTitle}>{product.title}</h1>
+              <p className={styles.productPrice}>${product.price}</p>
+              <p className={styles.productDescription}>{product.description}</p>
+              <div className={styles.buttonContainer}>
+                <button className={styles.addToCartButton} onClick={handleAddToCart}>Add To Cart</button>
+                <button onClick={handleAddToWishlist} className={styles.wishlistButton}>Add to Wishlist</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -87,7 +105,10 @@ const ProductDetailPage = () => {
     </>
   );
 };
- export default ProductDetailPage;
+
+export default ProductDetailPage;
+
+
 
 
 

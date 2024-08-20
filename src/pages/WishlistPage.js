@@ -84,6 +84,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { removeFromWishlist } from '../Redux/wishlistSlice';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import NavbarComponent from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const WishlistComponent = () => {
   const wishlist = useSelector(state => state.wishlist);
@@ -123,7 +125,9 @@ const WishlistComponent = () => {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="d-flex flex-column min-vh-100">
+      <NavbarComponent />
+    <div className="container mt-5 p-5 flex-grow-1">
       <h2>Your Wishlist</h2>
       {wishlist.length === 0 ? (
         <p>Your wishlist is empty.</p>
@@ -140,7 +144,7 @@ const WishlistComponent = () => {
             {wishlist.map(item => (
               <tr key={item.id}>
                 <td>{item.title}</td>
-                <td>${item.price.toFixed(2)}</td>
+                <td>${item.price}</td>
                 <td>
                   <button 
                     className="btn btn-danger" 
@@ -155,6 +159,8 @@ const WishlistComponent = () => {
         </table>
       )}
       <ToastContainer />
+    </div>
+    <Footer/>
     </div>
   );
 };

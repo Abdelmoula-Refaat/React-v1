@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import NavbarComponent from '../components/Navbar'
+import Footer from '../components/Footer';
+
 
 const RegisterComponent = () => {
   const [details, setDetails] = useState({ email: '', name: '', username: '', password: '', confirmPassword: '' });
@@ -85,7 +88,10 @@ const RegisterComponent = () => {
   };
 
   return (
-    <div className="container mt-5">
+    
+    <>
+    <div className="container mt-5 mb-4">
+      <NavbarComponent />
       <h2>Register</h2>
       <form>
         <div className="mb-3">
@@ -174,7 +180,11 @@ const RegisterComponent = () => {
         </div>
         <button type="button" className="btn btn-primary" onClick={handleRegister}>Register</button>
       </form>
-    </div>
+      </div>
+
+      <Footer/>
+    </>
+
   );
 };
 

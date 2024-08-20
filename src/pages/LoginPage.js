@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ToastContainer,toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import NavbarComponent from '../components/Navbar'
+import Footer from '../components/Footer';
 
 const LoginComponent = () => {
   const [details, setDetails] = useState({ email: '', password: '' });
@@ -33,29 +35,37 @@ const LoginComponent = () => {
     }
   };
 
-  const handleLogin = () => {
-    if (!details.email || !details.password) {
-      toast.error('All fields are required');
-      return;
-    }
+const handleLogin = () => {
+  const staticEmail = 'admin@admin.com';
+  const staticPassword = 'Admin@123';
 
+  if (details.email === staticEmail && details.password === staticPassword) {
+    // Static credentials match
+    localStorage.setItem('loggedInUser', JSON.stringify({ email: staticEmail }));
+    navigate('/admin'); // Navigate to the dashboard or any other protected route
+  } else {
+    // Check against stored users if you have other users
     const users = JSON.parse(localStorage.getItem('users')) || [];
     const user = users.find(user => user.email === details.email && user.password === details.password);
 
     if (user) {
       localStorage.setItem('loggedInUser', JSON.stringify(user));
-      navigate('/');
+      navigate('/'); // Navigate to the dashboard or any other protected route
     } else {
       toast.error('Invalid email or password');
     }
-  };
+  }
+};
+
 
   return (
-    <div className="container mt-5">
-      <h2>Login</h2>
+    <>
+    <div className="container">
+      <NavbarComponent />
+      <h2 className='mt-5'>Login</h2>
       <form>
         <div className="mb-3">
-          <label htmlFor="email" className="form-label">Email address</label>
+          <label htmlFor="email" className="form-label mt-5 ">Email address</label>
           <input
             type="email"
             className="form-control"
@@ -66,8 +76,8 @@ const LoginComponent = () => {
           />
           {errors.emailErr && <div className="text-danger">{errors.emailErr}</div>}
         </div>
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">Password</label>
+        <div className="mb-5">
+          <label htmlFor="password" className="form-label mt-5 ">Password</label>
           <input
             type={showPassword ? "text" : "password"}
             className="form-control"
@@ -90,10 +100,12 @@ const LoginComponent = () => {
             </label>
           </div>
         </div>
-        <button type="button" className="btn btn-primary" onClick={handleLogin}>Login</button>
+        <button type="button" className="btn btn-primary mb-5" onClick={handleLogin}>Login</button>
       </form>
       <ToastContainer />
     </div>
+      <Footer/>
+      </>
   );
 };
 
