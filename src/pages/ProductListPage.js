@@ -9,7 +9,7 @@ import styles from "./ProductListPage.module.css";
 
 
 // ! ودا كذالك
-import productsData from '../products.json'; // Import the JSON file
+  import productsData from '../products.json';  //Import the JSON file
 
 const ProductListComponent = () => {
   const [products, setProducts] = useState([]);
@@ -94,6 +94,7 @@ const loadProductsToLocalStorage = () => {
               onChange={(e) => setCategoryFilter(e.target.value)}
             >
               <option value="" style={{ display: 'none' }}>Select Category...</option>
+              <option value="">All Categories</option>
               <option value="electronics">Electronics</option>
               <option value="jewelery">Jewelry</option>
               <option value="men's clothing">Men's Clothing</option>
@@ -106,6 +107,7 @@ const loadProductsToLocalStorage = () => {
               onChange={(e) => setPriceFilter(e.target.value)}
             >
               <option value="all" style={{ display: 'none' }}>Select Price...</option>
+              <option value="all">All Prices</option>
               <option value="low">Under $50</option>
               <option value="high">$50 and above</option>
             </select>

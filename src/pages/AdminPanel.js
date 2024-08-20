@@ -225,13 +225,42 @@ const AdminDashboard = () => {
     setSelectedProduct(product);
   };
 
-  const handleDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete this product?")){
-      dispatch(deleteProduct(id));
-    }
+  // const handleDelete = (id) => {
+  //   if (window.confirm("Are you sure you want to delete this product?")){
+  //     dispatch(deleteProduct(id));
+  //   }
     
+  //   };
+    const handleDelete = (id) => {
+      const confirmToast = toast.info(
+        <div>
+          <p>Are you sure you want to delete this product?</p>
+          <div>
+            <button
+              onClick={() => {
+                dispatch(deleteProduct(id));
+                toast.success('Product deleted successfully!', {
+                  position: "top-center",
+                  autoClose: 3000
+                });
+                toast.dismiss(confirmToast); // Close confirmation toast
+              }}
+              style={{ marginRight: '10px' }}
+            >
+              Yes
+            </button>
+            <button onClick={() => toast.dismiss(confirmToast)}>No</button>
+          </div>
+        </div>,
+        {
+          position: "top-center",
+          autoClose: false,
+          closeButton: false,
+          style: { display: 'flex', flexDirection: 'column', alignItems: 'center' }
+        }
+      );
     };
-
+  
   const handleAddProduct = (newProduct) => {
     dispatch(addProduct(newProduct));
     toast.success('Product added successfully!');

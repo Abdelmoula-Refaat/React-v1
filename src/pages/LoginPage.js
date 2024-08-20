@@ -36,7 +36,7 @@ const LoginComponent = () => {
   };
 
 const handleLogin = () => {
-  const staticEmail = 'admin@admin.com';
+  const staticEmail = 'nadmin@admi.com';
   const staticPassword = 'Admin@123';
 
   if (details.email === staticEmail && details.password === staticPassword) {

@@ -131,7 +131,16 @@ const ProductForm = ({ product, saveProduct, setSelectedProduct }) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
-
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData((prevData) => ({ ...prevData, image: reader.result }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     saveProduct({ ...product, ...formData });
@@ -172,27 +181,39 @@ const ProductForm = ({ product, saveProduct, setSelectedProduct }) => {
           required
         ></textarea>
       </div>
+      
       <div className="mb-3">
-        <label className="form-label">Image URL</label>
+        <label className="form-label">Image</label>
         <input
-          type="text"
+          type="file"
           name="image"
           className="form-control"
-          value={formData.image}
-          onChange={handleChange}
+          onChange={handleFileChange}
           required
         />
+        {formData.image && (
+          <img
+            src={formData.image}
+            alt="Product"
+            style={{ marginTop: '10px', maxWidth: '100%' }}
+          />
+        )}
       </div>
       <div className="mb-3">
         <label className="form-label">Category</label>
-        <input
-          type="text"
+        <select
           name="category"
           className="form-control"
           value={formData.category}
           onChange={handleChange}
           required
-        />
+        >
+          <option value="" disabled>Select Category</option>
+          <option value="electronics">Electronics</option>
+          <option value="jewelery">Jewelry</option>
+          <option value="men's clothing">Men's Clothing</option>
+          <option value="women's clothing">Women's Clothing</option>
+        </select>
       </div>
       <button type="submit" className="btn btn-primary">
         {product?.id ? 'Update Product' : 'Add Product'}
