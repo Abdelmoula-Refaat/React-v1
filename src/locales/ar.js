@@ -9,9 +9,13 @@ const ar = {
       "Logout": "تسجيل الخروج",
       "Login": "تسجيل الدخول",
       "Register": "إنشاء حساب",
-      "Welcome to MyShop": "مرحبًا بك في MyShop",
+      "Welcome to MyShop": "  مرحبًا بك في متجرنا",
+      "Shop Now":"تسوق الان",
+      "Add To Cart":"اضف الى السلة",
+      "Add to Wishlist":"اضف الى المفضلة",
       "Product List":"قائمة المنتجات",
       "View Details":"عرض التفاصيل"
+      
     }
   };
   

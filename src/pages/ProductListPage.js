@@ -4,9 +4,8 @@ import NavbarComponent from '../components/Navbar';
 import Footer from '../components/Footer';
 import Pagination from '../components/Pagination';
 import "./ProductListPage.module.css";
-import { useTranslation } from 'react-i18next';
 import styles from "./ProductListPage.module.css";
-
+import { useTranslation } from 'react-i18next';
 
 // ! ودا كذالك
   import productsData from '../products.json';  //Import the JSON file
@@ -25,13 +24,13 @@ const ProductListComponent = () => {
 
 
     // ! دي يا عبد المولي بتستدعي البروداكتس من ملف الجسون  رنها اول مترن البروجيكت بعد كدا هيشها 
-const loadProductsToLocalStorage = () => {
-  if (!localStorage.getItem('products')) {
-    localStorage.setItem('products', JSON.stringify(productsData));
-    console.log(localStorage.getItem('products'));   
-  }
-};
-
+// const loadProductsToLocalStorage = () => {
+//   if (!localStorage.getItem('products')) {
+//     localStorage.setItem('products', JSON.stringify(productsData));
+//       console.log(localStorage.getItem('products'));   
+//   }
+// };
+// loadProductsToLocalStorage()
 
     const loadProducts = async () => {
       const storedProducts = localStorage.getItem('products');
@@ -127,7 +126,7 @@ const loadProductsToLocalStorage = () => {
                   <div className={styles.hoverContent}>
                     <p className={styles.cardSubtitle}>{product.description}</p>
                     <div className={styles.iconContainer}>
-                      <Link to={`/products/${product.id}`} className={styles.button}>View Details</Link>
+                      <Link to={`/products/${product.id}`} className={styles.button}>{t('View Details')}</Link>
                     </div>
                   </div>
                 </div>
@@ -148,67 +147,3 @@ const loadProductsToLocalStorage = () => {
 };
 
 export default ProductListComponent;
-
-// import React, { useEffect, useState } from 'react';
-// import { useSelector, useDispatch } from 'react-redux';
-// import { fetchProducts } from '../Redux/productSlice';
-// import NavbarComponent from '../components/Navbar';
-// import Footer from '../components/Footer';
-// import Pagination from '../components/Pagination';
-// import { useTranslation } from 'react-i18next';
-
-
-// const ProductListComponent = () => {
-//   const dispatch = useDispatch();
-//   const products = useSelector((state) => state.products.items);
-//   const productsStatus = useSelector((state) => state.products.status);
-//   const { t } = useTranslation();
-//   const [currentPage, setCurrentPage] = useState(1);
-//   const productsPerPage = 9;
-
-//   useEffect(() => {
-//     if (productsStatus === 'idle') {
-//       dispatch(fetchProducts());
-//     }
-//   }, [productsStatus, dispatch]);
-
-//   const indexOfLastProduct = currentPage * productsPerPage;
-//   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-//   const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
-
-//   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-//   return (
-//     <>
-//       <NavbarComponent />
-//       <div className="container mt-5">
-//         <h2>{t('Product List')}</h2>
-//         <div className="row">
-//           {currentProducts.map((product) => (
-//             <div key={product.id} className="col-md-4 mb-3">
-//               <div className="card h-100">
-//                 <img src={product.image} className="card-img-top" alt={product.title} />
-//                 <div className="card-body">
-//                   <h5 className="card-title">{product.title}</h5>
-//                   <p className="card-text">${product.price}</p>
-//                   <a href={`/products/${product.id}`} className="btn btn-primary">
-//                     {t('View Details')}
-//                   </a>
-//                 </div>
-//               </div>
-//             </div>
-//           ))}
-//         </div>
-//         <Pagination
-//           productsPerPage={productsPerPage}
-//           totalProducts={products.length}
-//           paginate={paginate}
-//           currentPage={currentPage}
-//         />
-//       </div>
-//       <Footer />
-//     </>
-//   );
-// };
-
-// export default ProductListComponent;

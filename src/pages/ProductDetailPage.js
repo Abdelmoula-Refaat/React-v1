@@ -8,6 +8,7 @@ import { addToWishlist } from '../Redux/wishlistSlice';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import styles from "./ProductDetailPage.module.css";
+import { useTranslation } from 'react-i18next';
 
 const ProductDetailPage = () => {
   const { id } = useParams();
@@ -16,6 +17,7 @@ const ProductDetailPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const wishlist = useSelector((state) => state.wishlist);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchProduct = () => {
@@ -93,8 +95,8 @@ const ProductDetailPage = () => {
               <p className={styles.productPrice}>${product.price}</p>
               <p className={styles.productDescription}>{product.description}</p>
               <div className={styles.buttonContainer}>
-                <button className={styles.addToCartButton} onClick={handleAddToCart}>Add To Cart</button>
-                <button onClick={handleAddToWishlist} className={styles.wishlistButton}>Add to Wishlist</button>
+                <button className={styles.addToCartButton} onClick={handleAddToCart}>{t('Add To Cart')}</button>
+                <button onClick={handleAddToWishlist} className={styles.wishlistButton}>{t('Add to Wishlist')}</button>
               </div>
             </div>
           </div>
@@ -112,44 +114,3 @@ export default ProductDetailPage;
 
 
 
-// import React, { useEffect, useState } from 'react';
-// import { useParams } from 'react-router-dom';
-// import NavbarComponent from '../components/Navbar';
-// import Footer from '../components/Footer';
-// import { useSelector, useDispatch } from 'react-redux';
-// import { fetchProducts } from '../Redux/productSlice';
-
-// const ProductDetailPage = () => {
-//   const { id } = useParams();
-//   const dispatch = useDispatch();
-//   const products = useSelector((state) => state.products.items);
-//   const [product, setProduct] = useState();
-
-//   useEffect(() => {
-//     if (!products.length) {
-//       dispatch(fetchProducts());
-//     } else {
-//       const foundProduct = products.find((prod) => prod.id === parseInt(id));
-//       setProduct(foundProduct);
-//     }
-//   }, [dispatch, id, products]);
-
-//   if (!product) {
-//     return <div>Loading...</div>;
-//   }
-
-//   return (
-//     <>
-//       <NavbarComponent />
-//       <div className="container mt-5">
-//         <h2>{product.title}</h2>
-//         <img src={product.image} alt={product.title} className="img-fluid mb-3" />
-//         <p>{product.description}</p>
-//         <h3>${product.price}</h3>
-//       </div>
-//       <Footer />
-//     </>
-//   );
-// };
-
-// export default ProductDetailPage;

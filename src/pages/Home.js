@@ -1,8 +1,10 @@
 import React from 'react';
 import NavbarComponent from '../components/Navbar';
 import Footer from '../components/Footer';
+import { useTranslation } from 'react-i18next';
 
 const Home = () => {
+  const { t } = useTranslation();
   return (
     <>
       <NavbarComponent />
@@ -10,9 +12,9 @@ const Home = () => {
       {/* Hero Section */}
       <header className="hero bg-secondary text-white text-center py-5">
         <div className="container">
-          <h1 className="display-4">Welcome to MyShop</h1>
+          <h1 className="display-4">{t('Welcome to MyShop')}</h1>
           <p className="lead">Your one-stop shop for all your needs.</p>
-          <a href="/products" className="btn btn-dark btn-lg">Shop Now</a>
+          <a href="/products" className="btn btn-dark btn-lg">{t('Shop Now')}</a>
         </div>
       </header>
 

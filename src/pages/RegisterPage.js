@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import NavbarComponent from '../components/Navbar'
-import Footer from '../components/Footer';
+
 
 
 const RegisterComponent = () => {
@@ -91,7 +90,7 @@ const RegisterComponent = () => {
     
     <>
     <div className="container mt-5 mb-4">
-      <NavbarComponent />
+      
       <h2>Register</h2>
       <form>
         <div className="mb-3">
@@ -182,7 +181,7 @@ const RegisterComponent = () => {
       </form>
       </div>
 
-      <Footer/>
+      
     </>
 
   );

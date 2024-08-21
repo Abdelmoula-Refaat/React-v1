@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ToastContainer,toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import NavbarComponent from '../components/Navbar'
-import Footer from '../components/Footer';
+
 
 const LoginComponent = () => {
   const [details, setDetails] = useState({ email: '', password: '' });
@@ -61,7 +60,7 @@ const handleLogin = () => {
   return (
     <>
     <div className="container">
-      <NavbarComponent />
+     
       <h2 className='mt-5'>Login</h2>
       <form>
         <div className="mb-3">
@@ -104,7 +103,7 @@ const handleLogin = () => {
       </form>
       <ToastContainer />
     </div>
-      <Footer/>
+      
       </>
   );
 };

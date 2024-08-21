@@ -2,7 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useCart } from '../Context/CartProvider';
 import { toast, ToastContainer } from 'react-toastify'; // Import Toastify and ToastContainer
 import 'react-toastify/dist/ReactToastify.css'; // Import Toastify styles
-
+import NavbarComponent from '../components/Navbar';
+import Footer from '../components/Footer';
 const CartPage = () => {
   const { cart, removeFromCart, updateQuantity } = useCart();
   const [total, setTotal] = useState(0);
@@ -54,6 +55,8 @@ const CartPage = () => {
   };
 
   return (
+  <>
+    <NavbarComponent />
     <div className="container mt-5">
       <h2>Shopping Cart</h2>
       {cart.length === 0 ? (
@@ -98,8 +101,13 @@ const CartPage = () => {
         <h4>Tax (15%): ${tax}</h4>
         <h4>Total: ${(total + tax)}</h4>
       </div>
+      
       <ToastContainer /> {/* Add ToastContainer here */}
+      
     </div>
+    <Footer />
+    
+  </>
   );
 };
 
